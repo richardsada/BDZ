@@ -1,0 +1,125 @@
+# ===== Базовый класс Animal =====
+class Animal:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        self.health = 100
+        self.energy = 100
+
+    def make_sound(self):
+        print(f"{self.name} издает звук: ...")
+
+    def eat(self, food):
+        self.energy += 10
+        print(f"{self.name} ест {food}. Энергия: +10")
+
+    def sleep(self, hours):
+        self.energy += hours * 5
+        print(f"{self.name} спит {hours} часов. Энергия: +{hours * 5}")
+
+    def info(self):
+        print(f"Имя: {self.name}, Возраст: {self.age}, Здоровье: {self.health}, Энергия: {self.energy}")
+
+    def __str__(self):
+        return f"Animal(name={self.name}, age={self.age})"
+
+
+# ===== Дочерний класс Dog =====
+class Dog(Animal):
+    def __init__(self, name, age, breed):
+        super().__init__(name, age)
+        self.breed = breed  # Порода
+
+    def make_sound(self):
+        print(f"{self.name} лает: Гав-гав!")
+
+    def fetch(self, item):
+        if self.energy < 20:
+            print(f"{self.name} слишком устал, чтобы принести {item}.")
+        else:
+            self.energy -= 20
+            print(f"{self.name} приносит {item}. Энергия: -20")
+
+    def info(self):
+        super().info()
+        print(f"Порода: {self.breed}")
+
+
+# ===== Дочерний класс Cat =====
+class Cat(Animal):
+    def __init__(self, name, age, color):
+        super().__init__(name, age)
+        self.color = color  # Цвет шерсти
+
+    def make_sound(self):
+        print(f"{self.name} мяукает: Мяу-мяу!")
+
+    def climb(self, height):
+        if self.energy < 15:
+            print(f"{self.name} слишком устал, чтобы залезть на {height} метров.")
+        else:
+            self.energy -= 15
+            print(f"{self.name} залезает на {height} метров. Энергия: -15")
+
+    def info(self):
+        super().info()
+        print(f"Цвет: {self.color}")
+
+
+# ===== Дочерний класс Bird (добавляем новое животное) =====
+class Bird(Animal):
+    def __init__(self, name, age, wingspan):
+        super().__init__(name, age)
+        self.wingspan = wingspan  # Размах крыльев
+
+    def make_sound(self):
+        print(f"{self.name} чирикает: Чик-чирик!")
+
+    def fly(self, distance):
+        if self.energy < 30:
+            print(f"{self.name} слишком устал, чтобы лететь {distance} км.")
+        else:
+            self.energy -= 30
+            print(f"{self.name} летит {distance} км. Энергия: -30")
+
+    def info(self):
+        super().info()
+        print(f"Размах крыльев: {self.wingspan} см")
+
+
+# ===== Примеры использования =====
+def main():
+    # Создаем животных
+    dog = Dog("Бобик", 3, "Дворняга")
+    cat = Cat("Мурка", 2, "Рыжий")
+    bird = Bird("Кеша", 1, 30)
+
+    # Проверяем методы
+    print("\n=== Информация о животных ===")
+    dog.info()
+    cat.info()
+    bird.info()
+
+    print("\n=== Звуки животных ===")
+    dog.make_sound()
+    cat.make_sound()
+    bird.make_sound()
+
+    print("\n=== Действия животных ===")
+    dog.fetch("палку")
+    cat.climb(2)
+    bird.fly(5)
+
+    print("\n=== Кормление и сон ===")
+    dog.eat("кость")
+    cat.sleep(3)
+    bird.eat("зерно")
+
+    print("\n=== Проверка энергии ===")
+    dog.info()
+    cat.info()
+    bird.info()
+
+
+if __name__ == "__main__":
+    main()

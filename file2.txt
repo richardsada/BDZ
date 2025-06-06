@@ -1,0 +1,121 @@
+# Основной родительский класс для всех живых существ
+class LivingCreature:
+    def __init__(self, creature_name, years_old):
+        self.creature_name = creature_name  
+        self.years_old = years_old  
+        self.hp = 100  
+        self.stamina = 100  
+
+    def vocalize(self):
+        print(f"{self.creature_name} издает какой-то звук...")  
+
+    def consume(self, meal):  
+        self.stamina += 10  
+        print(f"{self.creature_name} употребил {meal}. Восстановлено 10 энергии")  
+
+    def rest(self, duration):  
+        self.stamina += duration * 5  
+        print(f"{self.creature_name} отдыхал {duration} ч. +{duration * 5} энергии")  
+
+    def stats(self):  
+        print(f"Имя: {self.creature_name}, Лет: {self.years_old}, HP: {self.hp}, Энергия: {self.stamina}")  
+
+    def __repr__(self):  
+        return f"Существо({self.creature_name}, возраст {self.years_old})"  
+
+
+# Подкласс для собак
+class Canine(LivingCreature):  
+    def __init__(self, creature_name, years_old, dog_type):  
+        super().__init__(creature_name, years_old)  
+        self.dog_type = dog_type  
+
+    def vocalize(self):  
+        print(f"{self.creature_name} громко лает: Тяф-тяф!")  
+
+    def retrieve(self, obj):  
+        if self.stamina < 20:  
+            print(f"{self.creature_name} устал и не может принести {obj}.")  
+        else:  
+            self.stamina -= 20  
+            print(f"{self.creature_name} притащил {obj}! Затрачено 20 энергии")  
+
+    def stats(self):  
+        super().stats()  
+        print(f"Тип: {self.dog_type}")  
+
+
+# Подкласс для кошек
+class Feline(LivingCreature):  
+    def __init__(self, creature_name, years_old, fur_color):  
+        super().__init__(creature_name, years_old)  
+        self.fur_color = fur_color  
+
+    def vocalize(self):  
+        print(f"{self.creature_name} мурлычет: Мррр-мяу!")  
+
+    def ascend(self, height):  
+        if self.stamina < 15:  
+            print(f"{self.creature_name} устал и не залезет на {height} м.")  
+        else:  
+            self.stamina -= 15  
+            print(f"{self.creature_name} вскарабкался на {height} м! -15 энергии")  
+
+    def stats(self):  
+        super().stats()  
+        print(f"Окрас: {self.fur_color}")  
+
+
+# Подкласс для птиц
+class Avian(LivingCreature):  
+    def __init__(self, creature_name, years_old, wing_size):  
+        super().__init__(creature_name, years_old)  
+        self.wing_size = wing_size  
+
+    def vocalize(self):  
+        print(f"{self.creature_name} щебечет: Цвирь-цвирь!")  
+
+    def glide(self, dist):  
+        if self.stamina < 30:  
+            print(f"{self.creature_name} устал и не пролетит {dist} км.")  
+        else:  
+            self.stamina -= 30  
+            print(f"{self.creature_name} пролетел {dist} км! -30 энергии")  
+
+    def stats(self):  
+        super().stats()  
+        print(f"Размах крыльев: {self.wing_size} см")  
+
+
+# Демонстрация работы
+if __name__ == "__main__":  
+    # Создаем экземпляры  
+    doggo = Canine("Шарик", 4, "Овчарка")  
+    kitty = Feline("Барсик", 2, "Серый")  
+    birdy = Avian("Гоша", 1, 25)  
+
+    # Выводим информацию  
+    print("\n=== Данные о животных ===")  
+    doggo.stats()  
+    kitty.stats()  
+    birdy.stats()  
+
+    print("\n=== Звуки ===")  
+    doggo.vocalize()  
+    kitty.vocalize()  
+    birdy.vocalize()  
+
+    print("\n=== Активности ===")  
+    doggo.retrieve("палку")  
+    kitty.ascend(3)  
+    birdy.glide(2)  
+
+    print("\n=== Восстановление ===")  
+    doggo.consume("мясо")  
+    kitty.rest(2)  
+    birdy.consume("зернышки")  
+
+    print("\n=== Итоговые показатели ===")  
+    doggo.stats()  
+    kitty.stats()  
+    birdy.stats()  
